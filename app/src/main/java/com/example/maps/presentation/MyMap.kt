@@ -138,7 +138,6 @@ fun MyMap(
                     expanded = mapTypeMenuExpanded,
                     onDismissRequest = { mapTypeMenuExpanded = false }
                 ) {
-//                    MapType.values().forEach {
                     MapType.entries.forEach {
                         val mapType = it.name.capitaliseIt()
                         DropdownMenuItem(text = {
@@ -166,14 +165,17 @@ fun MyMap(
                         expanded = lineTypeMenuExpanded,
                         onDismissRequest = { lineTypeMenuExpanded = false }
                     ) {
-//                    MapType.values().forEach {
-                        MapType.entries.forEach {
-                            val mapType = it.name.capitaliseIt()
+                        val lineTypes = LineType.entries.toTypedArray().toMutableList()//the LineType entries are turned to array and then made mutableList
+                        if(latLngList.size < 3) { // this will only show the polygon option if there are more than 3 latLng pairs
+                            lineTypes.remove(LineType.POLYGON)
+                        }
+                        lineTypes.forEach {
+                            val aLineType = it.name.capitaliseIt()
                             DropdownMenuItem(text = {
-                                Text(text = mapType)
+                                Text(text = aLineType)
                             }, onClick = {
-                                onChangeMapType(it)
-                                lineTypeMenuSelectedText = mapType
+                                onChangeLineType(it)
+                                lineTypeMenuSelectedText = aLineType
                                 lineTypeMenuExpanded = false
                             })
                         }

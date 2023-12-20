@@ -27,15 +27,15 @@ fun MapScreen(context: Context) {
         mutableStateOf<LineType?>(null)
     }
 
-    getCurrentLocation(context) { latLng: LatLng ->
-        location = latLng
+    getCurrentLocation(context) {
+        location = it
         showMap = true
     }
 
     if(showMap) {
         MyMap(
             context = context,
-            latLng = LatLng(location.latitude, location.longitude),
+            latLng = location,
             mapProperties = mapProperties,
             lineType = lineType,
             changeIcon = changeIcon,
@@ -50,15 +50,18 @@ fun MapScreen(context: Context) {
             }
         )
     } else {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ){
-            Text(
-                text = "Loading Map..."
-            )
-        }
+        Text(
+            text = "Loading Map..."
+        )
+//        Column(
+//            modifier = Modifier.fillMaxSize(),
+//            horizontalAlignment = Alignment.CenterHorizontally,
+//            verticalArrangement = Arrangement.Center
+//        ){
+//            Text(
+//                text = "Loading Map..."
+//            )
+//        }
     }
 
 }
